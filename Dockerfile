@@ -1,6 +1,7 @@
 FROM ubuntu:18.04 
 
 LABEL com.example.version="0.0.1-beta"
+LABEL maintainer="thomas.goelles@gmail.com"
 
 # Set the working directory to /home
 WORKDIR /home
@@ -42,8 +43,10 @@ WORKDIR /tmp/lis-${LIS_VERSION}
 RUN echo $PWD
 RUN echo "configure and make of lis"
 RUN ./configure --prefix=${LIS_PATH} --enable-omp --enable-f90
-RUN make
+RUN make 
 RUN make check
+RUN make install
+RUN make installcheck
 RUN rm -rf /tmp/lis-${LIS_VERSION}
 
 
