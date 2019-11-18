@@ -1,34 +1,50 @@
 FROM ubuntu:18.04 
 
+LABEL com.example.version="0.0.1-beta"
+
 # Set the working directory to /home
 WORKDIR /home
 
-############## Envirinment flags ############## 
+#Envirinment flags 
 ENV DEBIAN_FRONTEND noninteractive 
 ENV DEBCONF_NONINTERACTIVE_SEEN true
-ENV LIS_PATH=/opt/lis
+ENV LIS_PATH=/usr/lib/lis
+ENV LIS_VERSION=2.0.20
 ENV NETCDF_PATH=/usr
 ENV FC=gfortran
 
-############## Get libs  ############## 
+#get libs  
 RUN apt-get -y update && \ 
-    apt-get install -y subversion gcc g++ gfortran libnetcdf-dev libnetcdff-dev less && \ 
-    apt-get install -y gmt gmt-dcw gmt-gshhg automake make wget zip unzip sudo && \
+    apt-get install -y \
+    subversion \
+    gcc \
+    gfortran \ 
+    libnetcdf-dev \  
+    libnetcdff-dev \
+    less \ 
+    gmt \
+    gmt-dcw \ 
+    gmt-gshhg \
+    automake \
+    make \
+    wget \ 
+    zip \
+    unzip \ 
+    sudo && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* 
-
-
 
 # install lis
 WORKDIR /tmp/
-RUN wget https://www.ssisc.org/lis/dl/lis-2.0.20.zip
-RUN unzip lis-2.0.20.zip
-WORKDIR /tmp/lis-2.0.20
-RUN ./configure --prefix=/opt/lis
+RUN echo "installing lis"
+RUN wget https://www.ssisc.org/lis/dl/lis-${LIS_VERSION}.zip
+RUN unzip lis-${LIS_VERSION}.zip
+WORKDIR /tmp/lis-${LIS_VERSION}
+RUN echo $PWD
+RUN echo "configure and make of lis"
+RUN ./configure --prefix=${LIS_PATH} --enable-omp --enable-f90
 RUN make
 RUN make check
-RUN rm -r /tmp/lis-2.0.20
-# Configure sicopolis the first time
-# automate the whole setup
+RUN rm -rf /tmp/lis-${LIS_VERSION}
 
 
 # Add user
@@ -38,16 +54,6 @@ RUN adduser --disabled-password --gecos '' ${USER} \
     && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 USER ${USER}
 ENV HOME=/home/${USER}
-
-
-
-# configure sicopolis
-RUN ${HOME}/sicopolis/copy_templates.sh
-WORKDIR ${HOME}/sicopolis/runs
-RUN sed -i 's/LIS_FLAG=.*/LIS_FLAG=\"true\"/g' sico_configs.sh
-RUN sed -i 's/NETCDF_FLAG=.*/NETCDF_FLAG=\"true\"/g' sico_configs.sh
-RUN sed -i 's/OPENMP_FLAG=.*/OPENMP_FLAG=\"true\"/g' sico_configs.sh
-RUN sed -i 's/LARGE_DATA_FLAG=.*/LARGE_DATA_FLAG=\"true\"/g' sico_configs.sh
 
 
 WORKDIR ${HOME}/sicopolis/
