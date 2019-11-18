@@ -1,3 +1,4 @@
 sicopolis
 *.log
 
+.vscode/settings.json
