@@ -1,6 +1,8 @@
 A docker based environment for the Ice sheet model SICOPOLIS http://www.sicopolis.net.
 For more details see http://www.sicopolis.net/index.html#docu
 
+The docker image is also on docker hub: `tgoelles/sicopolis_dev`
+
 It comes with gfortran, netCDF, lis and GMT.
 
 This is currently an unofficial beta version, and has only partly been tested. For issues and suggestions, please use the issue tracker on github.
@@ -20,7 +22,7 @@ svn checkout --username anonsvn --password anonsvn \
 
 ```
 
-Before the first run execute in the sicopolis folder
+Before the first run execute in the sicopolis folder:
 
 ```
 ./copy_templates.sh
