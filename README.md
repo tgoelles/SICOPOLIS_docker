@@ -17,7 +17,7 @@ Install docker: https://www.docker.com/products/docker-desktop for Mac and Windo
 
 Make a new folder.
 
-Then checkout the current version of SICOPOLIS (of use your own existing code)
+Then checkout the current version of SICOPOLIS (or use your own existing code)
 
 ```
 svn checkout --username anonsvn --password anonsvn \
@@ -25,7 +25,7 @@ svn checkout --username anonsvn --password anonsvn \
 
 ```
 
-Before the first run execute in the sicopolis folder:
+Before the first run execute in the sicopolis folder (or skip this step when using and existing code):
 
 ```
 ./copy_templates.sh
@@ -38,13 +38,11 @@ Then replace the sico_configs.sh in runs/sico_configs.sh with the one in this re
 cp sico_configs.sh sicopolis/runs/
 ```
 
-Start docker in the terminal, which starts and interactive bash shell to compile and run SICOPOLIS as usual.
+Start docker in the terminal, which starts an interactive bash shell to compile and run SICOPOLIS as usual.
 ```
 docker run -v $PWD/sicopolis:/home/glacier/sicopolis -it tgoelles/sicopolis_dev
 ```
 
-This mounts the the folder sicopolis to /home/glacier/sicopolis inside the container. The container is based on ubuntu 18.04 and has a user called glacier.
-
-
+This mounts the folder sicopolis to /home/glacier/sicopolis inside the container. The container is based on ubuntu 18.04 and has a user called "glacier".
 
 
