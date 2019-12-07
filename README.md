@@ -3,7 +3,7 @@
 A docker based environment for the Ice sheet model SICOPOLIS http://www.sicopolis.net.
 For more details please see http://www.sicopolis.net/index.html#docu
 
-The docker image is also on docker hub: `tgoelles/sicopolis_dev`
+This is the docker file for the image  `tgoelles/sicopolis_dev` on docker hub.
 
 It comes with gfortran, netCDF, lis and GMT.
 
@@ -25,19 +25,6 @@ svn checkout --username anonsvn --password anonsvn \
 
 ```
 
-Before the first run execute in the sicopolis folder (or skip this step when using and existing code):
-
-```
-./copy_templates.sh
-```
-
-Then replace the sico_configs.sh in runs/sico_configs.sh with the one in this repository.
-
-
-```
-cp sico_configs.sh sicopolis/runs/
-```
-
 Start docker in the terminal, which starts an interactive bash shell to compile and run SICOPOLIS as usual.
 ```
 docker run -v $PWD/sicopolis:/home/glacier/sicopolis -it tgoelles/sicopolis_dev
@@ -46,3 +33,24 @@ docker run -v $PWD/sicopolis:/home/glacier/sicopolis -it tgoelles/sicopolis_dev
 This mounts the folder sicopolis to /home/glacier/sicopolis inside the container. The container is based on ubuntu 18.04 and has a user called "glacier".
 
 
+Before the first run execute in the sicopolis folder (or skip this step when using and existing code):
+
+```
+./copy_templates.sh
+```
+
+Then replace the sico_configs.sh in runs/sico_configs.sh the one in the image. Run this inside the container:
+
+```
+cd sicopolis/runs
+cp ~/sico_configs.sh .
+```
+
+This is only necessary the first time.
+
+The next time you want to develop sicopolis inside the folder simply run 
+```
+docker run -v $PWD/sicopolis:/home/glacier/sicopolis -it tgoelles/sicopolis_dev
+```
+
+Tip: use VS code for development inside the container.
