@@ -25,9 +25,10 @@ svn checkout --username anonsvn --password anonsvn \
 
 ```
 
-Start docker in the terminal, which starts an interactive bash shell to compile and run SICOPOLIS as usual.
+Start docker in the terminal inside the sicopolis folder. This starts an interactive bash shell to compile and run SICOPOLIS as usual. The local repository is mounted as volume, which means that you can use your favorite editor as usual. 
+
 ```
-docker run -v $PWD/sicopolis:/home/glacier/sicopolis -it tgoelles/sicopolis_dev
+docker run -v $PWD:/home/glacier/sicopolis -it tgoelles/sicopolis_dev
 ```
 
 This mounts the folder sicopolis to /home/glacier/sicopolis inside the container. The container is based on ubuntu 18.04 and has a user called "glacier".
@@ -50,7 +51,7 @@ This is only necessary the first time.
 
 The next time you want to develop sicopolis inside the folder simply run 
 ```
-docker run -v $PWD/sicopolis:/home/glacier/sicopolis -it tgoelles/sicopolis_dev
+docker run -v $PWD:/home/glacier/sicopolis -it tgoelles/sicopolis_dev
 ```
 
 Tip: use VS code for development inside the container.
