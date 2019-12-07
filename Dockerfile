@@ -1,6 +1,6 @@
 FROM debian:latest
 
-LABEL com.example.version="0.1.0"
+LABEL com.example.version="0.1.1"
 LABEL maintainer="thomas.goelles@gmail.com"
 
 # Set the working directory to /home
@@ -64,4 +64,5 @@ ENV HOME=/home/${USER}
 
 COPY sico_configs.sh /home/${USER}
 
+WORKDIR /home/glacier/sicopolis
 ENTRYPOINT [ "bash" ]
