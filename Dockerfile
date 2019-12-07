@@ -1,10 +1,15 @@
-FROM ubuntu:18.04 
+FROM debian:latest
 
-LABEL com.example.version="0.0.1-beta"
+LABEL com.example.version="0.1.0"
 LABEL maintainer="thomas.goelles@gmail.com"
 
 # Set the working directory to /home
 WORKDIR /home
+
+# languages
+RUN apt-get update && apt-get install -y locales && rm -rf /var/lib/apt/lists/* \
+    && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
+ENV LANG en_US.utf8
 
 #Envirinment flags 
 ENV DEBIAN_FRONTEND noninteractive 
@@ -35,20 +40,19 @@ RUN apt-get -y update && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* 
 
 # install lis
-WORKDIR /tmp/
-RUN echo "installing lis"
-RUN wget https://www.ssisc.org/lis/dl/lis-${LIS_VERSION}.zip
-RUN unzip lis-${LIS_VERSION}.zip
-WORKDIR /tmp/lis-${LIS_VERSION}
-RUN echo $PWD
-RUN echo "configure and make of lis"
-RUN ./configure --prefix=${LIS_PATH} --enable-omp --enable-f90
-RUN make 
-RUN make check
-RUN make install
-RUN make installcheck
-RUN rm -rf /tmp/lis-${LIS_VERSION}
-
+RUN echo "installing lis" \
+    && cd /tmp/ \
+    && wget https://www.ssisc.org/lis/dl/lis-${LIS_VERSION}.zip \
+    && unzip lis-${LIS_VERSION}.zip \
+    && cd /tmp/lis-${LIS_VERSION} \
+    && echo $PWD \
+    && echo "configure and make of lis" \
+    && ./configure --prefix=${LIS_PATH} --enable-omp --enable-f90 \
+    && make \
+    && make check \
+    && make install \
+    && make installcheck  \
+    && rm -rf /tmp/lis-${LIS_VERSION} 
 
 # Add user
 ENV USER=glacier
@@ -58,6 +62,6 @@ RUN adduser --disabled-password --gecos '' ${USER} \
 USER ${USER}
 ENV HOME=/home/${USER}
 
+COPY sico_configs.sh /home/${USER}
 
-WORKDIR ${HOME}/sicopolis/
 ENTRYPOINT [ "bash" ]
