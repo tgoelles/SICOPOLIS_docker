@@ -48,8 +48,9 @@ cp ~/sico_configs.sh .
 
 This is only necessary the first time.
 
-The next time you want to develop sicopolis insde the folder simply run 
+The next time you want to develop sicopolis inside the folder simply run 
 ```
 docker run -v $PWD/sicopolis:/home/glacier/sicopolis -it tgoelles/sicopolis_dev
 ```
 
+Tip: use VS code for development inside the container.
