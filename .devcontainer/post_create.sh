@@ -1,0 +1,1 @@
+git clone --branch develop https://gitlab.awi.de/sicopolis/sicopolis.git
