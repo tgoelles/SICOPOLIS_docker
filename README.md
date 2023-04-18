@@ -27,6 +27,6 @@ git clone --branch develop
 Start docker in the terminal inside the sicopolis folder. This starts an interactive bash shell to compile and run SICOPOLIS as usual. The local repository is mounted as volume, which means that you can use your favorite editor as usual.
 
 ```
-docker run -v $PWD:/home/glacier/sicopolis -it tgoelles/sicopolis_dev
+docker run -v $PWD:/home/glacier/sicopolis -it ghcr.io/tgoelles/sicopolis_base:latest
 ```
 
