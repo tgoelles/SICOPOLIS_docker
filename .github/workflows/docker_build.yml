@@ -66,7 +66,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          dockerfile: Dockerfile
+          dockerfile: docker/Dockerfile
           platforms: linux/amd64
           cache-from: type=gha
           cache-to: type=gha,mode=max

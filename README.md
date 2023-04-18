@@ -3,9 +3,8 @@
 A docker based environment for the Ice sheet model SICOPOLIS http://www.sicopolis.net.
 For more details please see http://www.sicopolis.net/index.html#docu
 
-This is the docker file for the image  `tgoelles/sicopolis_dev` on docker hub.
 
-It comes with gfortran, netCDF, lis and GMT.
+It comes with gfortran, netCDF, lis and GMT and tapenade.
 
 This is currently an unofficial beta version, and has only partly been tested. Its the first step towards reproducible science.
 For issues and suggestions, please use the issue tracker on github.
@@ -20,12 +19,12 @@ Make a new folder.
 Then checkout the current version of SICOPOLIS (or use your own existing code)
 
 ```
-svn checkout --username anonsvn --password anonsvn \
-    https://swrepo1.awi.de/svn/sicopolis/trunk sicopolis
+git clone --branch develop
+    https://gitlab.awi.de/sicopolis/sicopolis.git
 
 ```
 
-Start docker in the terminal inside the sicopolis folder. This starts an interactive bash shell to compile and run SICOPOLIS as usual. The local repository is mounted as volume, which means that you can use your favorite editor as usual. 
+Start docker in the terminal inside the sicopolis folder. This starts an interactive bash shell to compile and run SICOPOLIS as usual. The local repository is mounted as volume, which means that you can use your favorite editor as usual.
 
 ```
 docker run -v $PWD:/home/glacier/sicopolis -it tgoelles/sicopolis_dev
@@ -49,7 +48,7 @@ cp ~/sico_configs.sh .
 
 This is only necessary the first time.
 
-The next time you want to develop sicopolis inside the folder simply run 
+The next time you want to develop sicopolis inside the folder simply run
 ```
 docker run -v $PWD:/home/glacier/sicopolis -it tgoelles/sicopolis_dev
 ```
