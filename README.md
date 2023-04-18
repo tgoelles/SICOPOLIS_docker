@@ -30,27 +30,3 @@ Start docker in the terminal inside the sicopolis folder. This starts an interac
 docker run -v $PWD:/home/glacier/sicopolis -it tgoelles/sicopolis_dev
 ```
 
-This mounts the folder sicopolis to /home/glacier/sicopolis inside the container. The container is based on ubuntu 18.04 and has a user called "glacier".
-
-
-Before the first run execute in the sicopolis folder (or skip this step when using and existing code):
-
-```
-./copy_templates.sh
-```
-
-Then replace the sico_configs.sh in runs/sico_configs.sh the one in the image. Run this inside the container:
-
-```
-cd sicopolis/runs
-cp ~/sico_configs.sh .
-```
-
-This is only necessary the first time.
-
-The next time you want to develop sicopolis inside the folder simply run
-```
-docker run -v $PWD:/home/glacier/sicopolis -it tgoelles/sicopolis_dev
-```
-
-Tip: use VS code for development inside the container.

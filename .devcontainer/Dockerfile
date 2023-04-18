@@ -1,0 +1,1 @@
+FROM ghcr.io/tgoelles/sicopolis_base:v0.0.2
