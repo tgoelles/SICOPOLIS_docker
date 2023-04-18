@@ -11,33 +11,33 @@ RUN apt-get update && apt-get install -y locales && rm -rf /var/lib/apt/lists/* 
     && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
 ENV LANG en_US.utf8
 
-# flags 
-ENV DEBIAN_FRONTEND noninteractive 
+# flags
+ENV DEBIAN_FRONTEND noninteractive
 ENV DEBCONF_NONINTERACTIVE_SEEN true
-ENV LIS_PATH=/usr/lib/lis
-ENV LIS_VERSION=2.0.20
+ENV LISDIR=/opt/lis
+ENV LIS_VERSION=2.1.1
 ENV NETCDF_PATH=/usr
 ENV FC=gfortran
 
-#get libs  
-RUN apt-get -y update && \ 
+#get libs
+RUN apt-get -y update && \
     apt-get install -y \
     subversion \
     gcc \
-    gfortran \ 
-    libnetcdf-dev \  
+    gfortran \
+    libnetcdf-dev \
     libnetcdff-dev \
-    less \ 
+    less \
     gmt \
-    gmt-dcw \ 
+    gmt-dcw \
     gmt-gshhg \
     automake \
     make \
-    wget \ 
+    wget \
     zip \
-    unzip \ 
+    unzip \
     sudo && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* 
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # install lis
 RUN echo "installing lis" \
@@ -47,12 +47,17 @@ RUN echo "installing lis" \
     && cd /tmp/lis-${LIS_VERSION} \
     && echo $PWD \
     && echo "configure and make of lis" \
-    && ./configure --prefix=${LIS_PATH} --enable-omp --enable-f90 \
+    && ./configure --prefix=${LISDIR} --libdir=${LISDIR}/lib \
+    --enable-fortran --enable-f90 \
+    --enable-omp --enable-saamg --enable-fma \
+    CC=gcc FC=gfortran F77=gfortran \
+    CFLAGS="-mcmodel=medium" CPPFLAGS="-mcmodel=medium" \
+    FCFLAGS="-mcmodel=medium" FFLAGS="-mcmodel=medium" \
     && make \
     && make check \
     && make install \
     && make installcheck  \
-    && rm -rf /tmp/lis-${LIS_VERSION} 
+    && rm -rf /tmp/lis-${LIS_VERSION}
 
 # Add user
 ENV USER=glacier
