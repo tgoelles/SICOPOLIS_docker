@@ -16,7 +16,7 @@ ENV USER=glacier
 # versions
 ENV TEPANADE_VERSION=3.16
 ENV LIS_VERSION=2.1.1
-ENV FPM_VERSION=0.8.0
+ENV FPM_VERSION=0.8.1
 
 # flags
 ENV DEBIAN_FRONTEND noninteractive
@@ -51,9 +51,8 @@ RUN apt-get -y update && \
     sudo && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-
 # install fpm
-RUN wget -O fpm https://github.com/fortran-lang/fpm/releases/download/v${FPM_VERSION}/${FPM_VERSION}-linux-x86_64 && \
+RUN wget -O fpm https://github.com/fortran-lang/fpm/releases/download/v${FPM_VERSION}/fpm-${FPM_VERSION}-linux-x86_64 && \
     mv fpm /usr/bin && \
     chmod u+x /usr/bin/fpm
 
@@ -78,7 +77,7 @@ RUN echo "installing lis" &&\
     rm -rf /tmp/lis-${LIS_VERSION}
 
 # install tepanade
-RUN echo "installing tepanade" \
+RUN echo "installing tepanade" &&\
     cd /tmp/ && \
     wget https://tapenade.gitlabpages.inria.fr/tapenade/distrib/tapenade_${TEPANADE_VERSION}.tar && \
     tar xvfz tapenade${TEPANADE_VERSION}.tar -C $TAPENADE_HOME && \
