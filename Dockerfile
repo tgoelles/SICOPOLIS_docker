@@ -69,7 +69,7 @@ RUN echo "installing lis" &&\
     --enable-omp --enable-saamg --enable-fma \
     CC=gcc FC=gfortran F77=gfortran \
     CFLAGS="-mcmodel=medium" CPPFLAGS="-mcmodel=medium" \
-    FCFLAGS="-mcmodel=medium" FFLAGS="-mcmodel=medium" \
+    FCFLAGS="-mcmodel=medium" FFLAGS="-mcmodel=medium" &&\
     make &&\
     make check &&\
     make install &&\
