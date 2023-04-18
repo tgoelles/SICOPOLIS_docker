@@ -48,6 +48,7 @@ RUN apt-get -y update && \
     unzip \
     tar \
     openjdk-11-jre \
+    gdb \
     sudo && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
