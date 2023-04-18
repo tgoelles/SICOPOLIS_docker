@@ -76,11 +76,12 @@ RUN echo "installing lis" &&\
     make installcheck &&\
     rm -rf /tmp/lis-${LIS_VERSION}
 
-# install tepanade
-RUN echo "installing tepanade" &&\
+
+RUN echo "installing TAPENADE" &&\
     cd /tmp/ && \
     wget https://tapenade.gitlabpages.inria.fr/tapenade/distrib/tapenade_${TEPANADE_VERSION}.tar && \
-    tar xvfz tapenade${TEPANADE_VERSION}.tar -C $TAPENADE_HOME && \
+    tar xvfz tapenade_${TEPANADE_VERSION}.tar  && \
+    mv /tmp/tapenade_${TEPANADE_VERSION} $TAPENADE_HOME && \
     rm -r /tmp/tapenade_${TEPANADE_VERSION}.tar
 
 # add user to superuse
