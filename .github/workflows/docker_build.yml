@@ -65,8 +65,8 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
-          context: .
-          dockerfile: docker/Dockerfile
+          context: docker
+          dockerfile: Dockerfile
           platforms: linux/amd64
           cache-from: type=gha
           cache-to: type=gha,mode=max
