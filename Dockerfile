@@ -13,14 +13,17 @@ ENV LANG en_US.utf8
 
 ENV USER=glacier
 
+# versions
+ENV TEPANADE_VERSION=3.16
+ENV LIS_VERSION=2.1.1
+ENV FPM_VERSION=0.8.0
+
 # flags
 ENV DEBIAN_FRONTEND noninteractive
 ENV DEBCONF_NONINTERACTIVE_SEEN true
 ENV LISDIR=/opt/lis
-ENV LIS_VERSION=2.1.1
 ENV NETCDF_PATH=/usr
 ENV FC=gfortran
-ENV TEPANADE_VERSION=3.16
 ENV TAPENADE_HOME="/home/$USER/tapenade_$TEPANADE_VERSION"
 ENV PATH="$PATH:$TAPENADE_HOME/bin"
 ENV JAVA_HOME=/usr/java/default
@@ -48,6 +51,12 @@ RUN apt-get -y update && \
     sudo && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+
+# install fpm
+RUN wget -O fpm https://github.com/fortran-lang/fpm/releases/download/v${FPM_VERSION}/${FPM_VERSION}-linux-x86_64 && \
+    mv fpm /usr/bin && \
+    chmod u+x /usr/bin/fpm
+
 # install lis
 RUN echo "installing lis" &&\
     cd /tmp/ &&\
@@ -56,7 +65,7 @@ RUN echo "installing lis" &&\
     cd /tmp/lis-${LIS_VERSION} &&\
     echo $PWD &&\
     echo "configure and make of lis" &&\
-    ./configure --prefix=${LISDIR} --libdir=${LISDIR}/lib &&\
+    ./configure --prefix=${LISDIR} --libdir=${LISDIR}/lib \
     --enable-fortran --enable-f90 \
     --enable-omp --enable-saamg --enable-fma \
     CC=gcc FC=gfortran F77=gfortran \
