@@ -80,4 +80,4 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: |
             ghcr.io/tgoelles/sicopolis_base:latest
-            ghcr.io/tgoelles/psicopolis_base:${{ env.TAG }}
+            ghcr.io/tgoelles/sicopolis_base:${{ env.TAG }}
