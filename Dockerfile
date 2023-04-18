@@ -67,7 +67,6 @@ RUN adduser --disabled-password --gecos '' ${USER} \
 USER ${USER}
 ENV HOME=/home/${USER}
 
-COPY sico_configs.sh /home/${USER}
 
 WORKDIR /home/glacier/sicopolis
 ENTRYPOINT [ "bash" ]
